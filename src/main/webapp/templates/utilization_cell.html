@@ -1,0 +1,4 @@
+<div ng-class="{utilization_100 : row.getProperty(col.field) >= 100, 
+				utilization_75 : row.getProperty(col.field) >= 75 && row.getProperty(col.field) < 100}">
+	<div class="ngCellText">{{row.getProperty(col.field) | number : 1}}%</div>
+</div>

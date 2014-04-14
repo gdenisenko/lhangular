@@ -1,0 +1,13 @@
+.gridStyle {
+	height: 400px;
+	width: 950px;
+	border:1px solid black;
+}
+
+.utilization_100 {
+	background-color:red;
+}
+
+.utilization_75 {
+	background-color : yellow;
+}
