@@ -1,0 +1,5 @@
+<div ng-show="!isEdit(row)" class="ngCellText" ng-class="col.colIndex()">
+	<span ng-cell-text>{{row.getProperty(col.field)}}</span>
+</div>
+
+<input ng-show="isEdit(row)" ng-class="'colt' + col.index" ng-input="COL_FIELD" ng-model="COL_FIELD" />
