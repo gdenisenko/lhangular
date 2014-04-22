@@ -9,22 +9,24 @@ myApp.controller('rxmsCntrl', ['$scope', '$location', function($scope, $location
 	
 	$scope.gridOptions = {
 			data : 'myData',
-			columnDefs : [{field : 'rxmGroupName', displayName : 'RXM Group Name'},
-			              {field : 'rxmGroup', displayName : 'RXM Group Number'},
+			columnDefs : [{field : 'rxmGroupName', displayName : 'RXM Group Name', width : 145},
+			              {field : 'rxmGroup', displayName : 'RXM Group Number', width : 155},
 			              {field : 'rxmName', displayName : 'RXM Name'},
 			              {field : 'rxmNumber', displayName : 'RXM Number'},
 			              {field : 'dailyNetDV01', displayName : 'Daily Net DV01', cellTemplate : 'templates/linked_edit_cell.html'},
 			              {field : 'dailyCrossDV01', displayName : 'Daily Cross DV01', cellTemplate : 'templates/linked_edit_cell.html'},
 			              {field : 'aggNetDV01', displayName : 'Agg Net DV01', cellTemplate : 'templates/linked_edit_cell.html'},
-			              {displayName : 'Options', width: 180, cellTemplate : 'templates/buttons_cell.html'}],
+			              {displayName : 'Options', width: 170, cellTemplate : 'templates/buttons_cell.html'}],
 			
 			multiSelect : false,
 			filterOptions :  {filterText: '', useExternalFilter: false }
 	};
 	
 	////////////////////////////////
-	$scope.rxmDetails = function(row) {
-		$location.path('rxm/' + escape(row.getProperty('rxmNumber')));
+	$scope.rxmDetails = function(row, editable) {
+		mode = editable ? '/edit' : '';
+		
+		$location.path('rxm/' + escape(row.getProperty('rxmNumber')) + mode);
 	};
 	
 	///////////////////////////////
@@ -37,9 +39,6 @@ myApp.controller('rxmsCntrl', ['$scope', '$location', function($scope, $location
 		return !!$scope.edit[row.getProperty('id')];
 	};
 	
-	$scope.test = function (row) {
-		alert(row);
-	};
 	///////////////////////////////
 	
 	$scope.applyFilter = function() {
@@ -52,6 +51,46 @@ myApp.controller('rxmsCntrl', ['$scope', '$location', function($scope, $location
 
 myApp.controller('rxmDetailsCntrl', ['$scope', '$routeParams', function($scope, $routeParams) {	
 	$scope.rxmNumber = $routeParams.rxmNumber;
+	isEdit = $routeParams.mode == 'edit';
+	
+	$scope.myData = rxmDetailsData;
+	
+	$scope.gridOptions = {
+			data : 'myData', 
+			showGroupPanel: true, 
+			keepLastSelected:true,
+			showFilter: true,
+			multiSelect: false,
+			showColumnMenu:true,
+			filterOptions: {filterText:'', useExternalFilter: false}, 
+			columnDefs: [      
+		                    { width : 170, cellTemplate: '<input type="button" value="Restrict">&nbsp;<input type="button" value="Edit">&nbsp;<input type="button" value="Kill">'},
+		                    { field: "A_CCY", displayName:'Currency',width: 75},
+		 					{ field: "A_DAILY_DELTA_NET", displayName:'Net DV01',width: 80,enableCellEdit: isEdit},
+		                    { field: "A_DAILY_DELTA_GROSS", displayName:'Gross DV01',width: 100,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_1M",displayName:'1M', width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_3M",displayName:'3M', width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_6M", displayName:'6M',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_1Y", displayName:'1Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_2Y", displayName:'2Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_3Y", displayName:'3Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_4Y", displayName:'4Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_5Y", displayName:'5Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_6Y", displayName:'6Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_7Y", displayName:'7Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_8Y", displayName:'8Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_9Y", displayName:'9Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_10Y", displayName:'10Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_15Y", displayName:'15Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_20Y", displayName:'20Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_25Y", displayName:'25Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_30Y", displayName:'30Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_LIMIT_50Y", displayName:'50Y',width: 45 ,enableCellEdit: isEdit},
+		                    { field: "A_FUND", displayName:'RXM Number',width: 100 ,enableCellEdit: isEdit},
+		                    { field: "A_ASSET", displayName:'Asset',width: 55 ,enableCellEdit: isEdit},
+		                    { field: "B_GROUP_NAME", displayName:'RXM Group',width: 185 ,enableCellEdit: isEdit}
+		                 ]
+	};
 }]);
 
 function getStringValue(value) {

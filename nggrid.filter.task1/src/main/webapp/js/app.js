@@ -7,7 +7,11 @@ myApp.config(['$routeProvider', function($routeProvider) {
 			controller : 'rxmsCntrl'
 		}).
 		when('/rxm/:rxmNumber', {
-			templateUrl : 'partials/rxm.html',
+			templateUrl : 'partials/rxm_2.html',
+			controller : 'rxmDetailsCntrl'
+		}).
+		when('/rxm/:rxmNumber/:mode', {
+			templateUrl : 'partials/rxm_2.html',
 			controller : 'rxmDetailsCntrl'
 		}).	
 		otherwise({
